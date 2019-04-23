@@ -1,0 +1,7 @@
+<h2>{{ question.question_text }}</h2>
+
+{% for choice in question.choice_set.all %}
+	<p>{{ choice.choice_text }} --- {{ choice.votes }} vote{{ choice.votes|pluralize }}</p>
+	<!-- 使用形式：{{value | pluralize}}，或者{{value | pluralize:"es"}}，或者{{value | pluralize:"y,ies"}}意义：如果value不是1，则返回一个复数后缀，缺省的后缀是's' -->
+{% endfor %}
+</ul><p><a href="{% url 'polls:detail' question.id %}">再投一次</a> | <a href="{% url 'polls:index' %}">返回首页</a> | <a href="{% url 'polls:index1' %}">返回首页1</a> | <a href="{% url 'polls:index2' %}">返回首页2</a></p>

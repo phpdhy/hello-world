@@ -1,0 +1,15 @@
+<h2>{{ question.question_text }}</h2>
+<!-- DetailView方式下，object自动对应model定义的question（自动包含在context中），但如果不是generic view方式，则object为空 -->
+
+{% if error_message %}
+	<p><strong><font color="red">{{ error_message }}</font></strong></p>
+{% endif %}
+
+<form action="{% url 'polls:vote' question.id %}" method="post">
+	{% csrf_token %}
+	{% for choice in question.choice_set.all %}
+		<p><input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+		<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label></p>
+	{% endfor %}
+	<br><input type="submit" value="投一票">&nbsp;{{ vote_time }} <!-- context中自定义添加的元素 -->
+</form>

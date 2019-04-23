@@ -1,0 +1,42 @@
+<!-- {% if latest_question_list %}
+	<ul>
+		{% for question in latest_question_list %}
+			<!- -<li><a href="/polls/{{question.id}}">{{question.question_text}}</a></li>- ->
+			<h2><li><a href="{% url 'polls:detail' question.id %}">{{question.question_text}}</a></li></h2>
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>没有polls记录！</p>
+{% endif %} -->
+
+
+<ul>
+{% for question in latest_question_list %}
+    <h2><li><a href="{% url 'polls:detail' question.id %}">{{question.question_text}}</a></li></h2>
+{% empty %} <!-- 省去了if else语句的判断 -->
+    <li>没有polls记录！</li>
+{% endfor %}
+</ul>
+
+<div class="pagination">
+    <span class="step-links"><ul>
+        {% if latest_question_list.has_previous %}
+            <a href="?page=1">&laquo; 首页</a>
+            <a href="?page={{ latest_question_list.previous_page_number }}">上一页</a>
+        {% endif %}
+
+        <span class="current">
+            {{ latest_question_list.number }}/{{ latest_question_list.paginator.num_pages }}
+        </span>
+
+        {% if latest_question_list.has_next %}
+            <a href="?page={{ latest_question_list.next_page_number }}">下一页</a>
+            <a href="?page={{ latest_question_list.paginator.num_pages }}">末页 &raquo;</a>
+        {% endif %}</ul>
+    </span>
+</div>
+
+<br>
+
+<p><a href="{% url 'polls:aboutus' %}">Aboutus</a> | <a href="{% url 'polls:about' %}">About</a> | <a href="{% url 'polls:go-to-RedirectView' %}">Go-to-RedirectView</a></p>
+
